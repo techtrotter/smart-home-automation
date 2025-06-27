@@ -65,7 +65,7 @@ The architecture includes the following layers:
 
 ## Circuit Diagram
 
-*(Include your circuit diagram as circuit-diagram.png or embed it from external source here)*
+
 
 Connections:
 - DHT11 → Digital Pin D2
@@ -129,7 +129,9 @@ Connections:
 - Web interface for rules-based configuration
 
 ---
-## code
+## 📟 Code
+
+```cpp
 /* Smart Home Automation System using ESP8266 and MQTT
  * Author: Bijoy Laxmi Biswas
  * Controls appliances using MQTT messages and automates based on sensor input
@@ -225,15 +227,15 @@ void loop() {
     client.publish(temp_topic, String(temp).c_str(), true);
   }
 
-  // Example Automation: Turn AC on at <=16°C, switch to economy at >=24°C
   if (temp <= 16.0) {
     digitalWrite(RELAY_PIN, LOW);  // AC ON
   } else if (temp >= 24.0) {
-    digitalWrite(RELAY_PIN, HIGH); // AC to Economy/Off
+    digitalWrite(RELAY_PIN, HIGH); // AC OFF / Economy
   }
 
-  delay(10000);  // Delay 10 seconds before next reading
+  delay(10000);
 }
+```
 
 ## Author
 

@@ -129,6 +129,110 @@ Connections:
 - Web interface for rules-based configuration
 
 ---
+/* Smart Home Automation System using ESP8266 and MQTT
+ * Author: Bijoy Laxmi Biswas
+ * Controls appliances using MQTT messages and automates based on sensor input
+ */
+
+#include <ESP8266WiFi.h>
+#include <PubSubClient.h>
+#include <DHT.h>
+
+// Wi-Fi credentials
+const char* ssid = "your_SSID";
+const char* password = "your_PASSWORD";
+
+// MQTT broker
+const char* mqtt_server = "broker.hivemq.com";  // or your local broker IP
+
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+// Appliance Pins
+#define RELAY_PIN D1
+#define DHTPIN D2
+#define DHTTYPE DHT11
+
+DHT dht(DHTPIN, DHTTYPE);
+
+// Topics
+const char* light_topic = "home/room1/light";
+const char* temp_topic = "home/room1/temperature";
+
+void setup_wifi() {
+  delay(10);
+  Serial.println("Connecting to WiFi...");
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.print(".");
+  }
+  Serial.println("\nWiFi connected");
+}
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  String msg;
+  for (int i = 0; i < length; i++) {
+    msg += (char)payload[i];
+  }
+
+  if (String(topic) == light_topic) {
+    if (msg == "ON") {
+      digitalWrite(RELAY_PIN, LOW);  // Relay ON
+    } else if (msg == "OFF") {
+      digitalWrite(RELAY_PIN, HIGH); // Relay OFF
+    }
+  }
+}
+
+void reconnect() {
+  while (!client.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    if (client.connect("ESP8266Client")) {
+      Serial.println("connected");
+      client.subscribe(light_topic);
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(client.state());
+      delay(5000);
+    }
+  }
+}
+
+void setup() {
+  pinMode(RELAY_PIN, OUTPUT);
+  digitalWrite(RELAY_PIN, HIGH);  // Relay initially off
+
+  Serial.begin(115200);
+  setup_wifi();
+  client.setServer(mqtt_server, 1883);
+  client.setCallback(callback);
+  dht.begin();
+}
+
+void loop() {
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop();
+
+  float temp = dht.readTemperature();
+  if (!isnan(temp)) {
+    Serial.print("Temperature: ");
+    Serial.println(temp);
+    client.publish(temp_topic, String(temp).c_str(), true);
+  }
+
+  // Example Automation: Turn AC on at <=16°C, switch to economy at >=24°C
+  if (temp <= 16.0) {
+    digitalWrite(RELAY_PIN, LOW);  // AC ON
+  } else if (temp >= 24.0) {
+    digitalWrite(RELAY_PIN, HIGH); // AC to Economy/Off
+  }
+
+  delay(10000);  // Delay 10 seconds before next reading
+}
 
 ## Author
 

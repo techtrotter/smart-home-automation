@@ -129,7 +129,7 @@ Connections:
 - Web interface for rules-based configuration
 
 ---
-## 📟 Code
+##  Code
 
 ```cpp
 /* Smart Home Automation System using ESP8266 and MQTT

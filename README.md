@@ -2,23 +2,7 @@
 
 This project implements a real-world IoT-based smart home automation solution that allows users to remotely monitor and control home appliances using a microcontroller (ESP8266) over Wi-Fi via MQTT protocol. The system is capable of automating appliances like fans, lights, and air conditioners based on environmental inputs such as temperature and motion.
 
-## Table of Contents
 
-- [Introduction](#introduction)
-- [System Overview](#system-overview)
-- [Architecture](#architecture)
-- [Features](#features)
-- [Hardware Components](#hardware-components)
-- [Software Components](#software-components)
-- [Circuit Diagram](#circuit-diagram)
-- [Working Principle](#working-principle)
-- [Installation & Setup](#installation--setup)
-- [Use Cases](#use-cases)
-- [Future Enhancements](#future-enhancements)
-- [Author](#author)
-- [License](#license)
-
----
 
 ## Introduction
 

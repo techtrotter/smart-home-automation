@@ -129,6 +129,7 @@ Connections:
 - Web interface for rules-based configuration
 
 ---
+## code
 /* Smart Home Automation System using ESP8266 and MQTT
  * Author: Bijoy Laxmi Biswas
  * Controls appliances using MQTT messages and automates based on sensor input

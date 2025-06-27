@@ -63,8 +63,21 @@ The architecture includes the following layers:
 
 ---
 
-## Circuit Diagram
 
+## Circuit Diagrams & Architecture
+
+### 1. System Overview with MQTT
+![Smart Home Overview](./iotproject_smarthome.png)
+
+---
+
+### 2. Sensor-Based Wiring Layout
+![Sensor & Relay Connections](./smarthome1.png)
+
+---
+
+### 3. NodeMCU + DHT11 + PIR + Relay Control
+![ESP8266 Circuit Diagram](./circuitdiagram.png)
 
 
 Connections:
